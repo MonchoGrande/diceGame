@@ -1,0 +1,255 @@
+{
+	"info": {
+		"_postman_id": "2f6ff6fc-296f-4423-9388-02b5d5979f6a",
+		"name": "Sprint_4_Juego_de_Dados",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:3000/players",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "nombre",
+							"value": "pedro",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/players",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"players"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/players",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "nombre",
+							"value": "ani",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/players",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"players"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/players/1/games",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/players/1/games",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"players",
+						"1",
+						"games"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/players/1/games",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "nombre",
+							"value": "antonio",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/players/4/games",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"players",
+						"4",
+						"games"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/players/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/players",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"players"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/players/ranking",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/players/ranking",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"players",
+						"ranking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/players/ranking/loser",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/players/ranking/loser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"players",
+						"ranking",
+						"loser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/players/winner",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/players/ranking/winner",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"players",
+						"ranking",
+						"winner"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/login",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjMzOTgzNTQsImV4cCI6MTYyNDYwNzk1NH0.UxYKNhJPOX67Tv3tVLPlvWLQdOChyBlXcGQcLeCSuJ4",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "nombre",
+							"value": "Moncho",
+							"type": "text"
+						},
+						{
+							"key": "psw",
+							"value": "1234",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
