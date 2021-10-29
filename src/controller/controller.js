@@ -45,18 +45,15 @@ const deletePartidas = async (req, res) => {
 };
 
 //Devuelve todos los jugadores y ratio partidas ganadas
-const player = async (req, res) => {
+const player = async (req, res, next) => {
   try {
     let jugadoresRatio = await servicio.ratioPartidasGanadas();
 
     res.json({
       'Jugadores y sus porcentajes': jugadoresRatio,
     });
-  } catch (error) {
-    res.status(400).send({
-      success: false,
-      error: error,
-    });
+  } catch (err) {
+    return next(new Error(err));
   }
 };
 

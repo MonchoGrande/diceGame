@@ -1,6 +1,8 @@
 const express = require('express');
-const routes = require('./routes/routes');
 require('dotenv').config();
+
+const routes = require('./routes/routes');
+const handlerError = require('./middlewares/handler-errors');
 const port = process.env.PORT || 3000;
 
 const app = express();
@@ -11,6 +13,12 @@ app.use(express.json());
 
 //Routes
 app.use(routes);
+
+//Not route handlerFound
+app.use(handlerError.routeFoundHandler);
+
+//Error handler
+app.use(handlerError.errorHandler);
 
 app.listen(port, () => {
   console.log(`El servidor está inicializado en el puerto ${port}`);
