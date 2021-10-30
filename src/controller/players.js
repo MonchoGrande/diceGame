@@ -1,16 +1,13 @@
 const Jugador = require('../models/jugador.js');
 
-// Insertamos Jugadores
-const insertJugador = async (req, res) => {
+//Insert Players
+const insertJugador = async (req, res, next) => {
   let jugador = new Jugador();
 
   if (req.body.nombre === '') {
-    jugador.nombre = req.body.nombre = 'ANONIMO';
+    jugador.nombre = 'ANONIMO';
     jugador.save((err, jugadorSave) => {
-      if (err)
-        res
-          .status(500)
-          .send({ message: `Error al intentar guardar en BD:${err}` });
+      if (err) return next(new Error(err));
       res.status(200).send({ jugador: jugadorSave });
     });
   } else {
@@ -18,10 +15,7 @@ const insertJugador = async (req, res) => {
       if (count === 0) {
         jugador.nombre = req.body.nombre;
         jugador.save((err, jugadorSave) => {
-          if (err)
-            res
-              .status(500)
-              .send({ message: `Error al intentar guardar en BD:${err}` });
+          if (err) return next(new Error(err));
           res.status(201).json({ jugador: jugadorSave });
         });
       } else {
@@ -33,30 +27,27 @@ const insertJugador = async (req, res) => {
   }
 };
 
-//Actualizamos nombre
+//Update name
 const actualizaNombre = async (req, res) => {
-  let id = req.body.id;
-  let update = req.body;
-  let jugador = new Jugador();
-  if (!req.body.id) {
+  const { body = {} } = req;
+
+  const jugador = new Jugador();
+  if (!body.id) {
     res.status(200).send({ message: 'Debe introducir un id' });
   } else if (
-    Jugador.countDocuments({ nombre: req.body.nombre }, (err, count) => {
+    Jugador.countDocuments({ nombre: body.nombre }, (err, count) => {
       if (count === 0) {
-        Jugador.findByIdAndUpdate(id, update, (err, jugadorUpdate) => {
-          if (err)
-            res
-              .status(500)
-              .send({ message: `Error al actualizar usuario:${err}` });
+        Jugador.findByIdAndUpdate(body.id, body, (err, jugadorUpdate) => {
+          if (err) return next(new Error(err));
 
           jugador.save(jugadorUpdate);
           res.status(200).send({
-            message: `El nuevo nombre del id: ${jugadorUpdate.id} es ${req.body.nombre}`,
+            message: `El nuevo nombre del id: ${jugadorUpdate.id} es ${body.nombre}`,
           });
         });
       } else {
         res.status(200).json({
-          message: `El nombre:${req.body.nombre} ya existe, introduzca otro.`,
+          message: `El nombre:${body.nombre} ya existe, introduzca otro.`,
         });
       }
     })

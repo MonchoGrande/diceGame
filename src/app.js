@@ -21,5 +21,5 @@ app.use(handlerError.routeFoundHandler);
 app.use(handlerError.errorHandler);
 
 app.listen(port, () => {
-  console.log(`El servidor está inicializado en el puerto ${port}`);
+  console.log(`Server running on port: ${port}`);
 });

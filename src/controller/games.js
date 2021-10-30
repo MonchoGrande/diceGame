@@ -1,8 +1,8 @@
 const servicio = require('../services/services');
 const Juego = require('../models/juego');
 
-//Jugamos una partida
-const tiradaDados = async (req, res) => {
+//We played a game
+const tiradaDados = async (req, res,next) => {
   try {
     const id = { _id: req.params.id };
     const check = await servicio.checkPlayerId(id);
@@ -20,31 +20,30 @@ const tiradaDados = async (req, res) => {
     } else {
       res.status(404).send({ message: `El jugador introducido no existe` });
     }
-  } catch (error) {
-    res
-      .status(500)
-      .send({ message: `Se ha producido un error en el servidor ` });
+  } catch (err) {
+    return next(new Error(err));
   }
 };
 
-//Eliminamos todas las partidas de un jugador por su id
+//We delete all the games of a player by his or her id
 const deletePartidas = async (req, res) => {
   try {
     let id = req.params.id;
 
     let resultado = await Juego.deleteMany({ idJugador: id });
     if (resultado.deletedCount === 0)
-      res.status(400).send(`Este id no tiene partidas o no  existe`);
+      res.status(400).send(`Este id no tiene partidas o no existe`);
 
     res.status(200).send({
       message: `Borradas todas las partidas del jugador:  ${id}`,
     });
-  } catch (error) {
-    res.status(400).send({ message: `Se ha producido un error` });
+  } catch (err) {
+    return next(new Error(err))
+    
   }
 };
 
-//Devuelve todos los jugadores y ratio partidas ganadas
+//Returns all players and won games ratio
 const player = async (req, res, next) => {
   try {
     let jugadoresRatio = await servicio.ratioPartidasGanadas();
@@ -57,46 +56,48 @@ const player = async (req, res, next) => {
   }
 };
 
-// Lista las partidas de un jugador concreto
-const listaPartidas = async (req, res) => {
-  let id = req.params.id;
-  let existe = await servicio.checkPlayerId(id);
-  if (existe === true) {
-    const resultado = await servicio.recuperaPartidas(id);
-    res.status(200).json(resultado);
-  } else {
-    res.status(404).json({
-      message: 'El jugador introducido no exite',
-    });
+//Lists the games of a specific player
+const listaPartidas = async (req, res, next) => {
+  try {
+    let id = req.params.id;
+    let existe = await servicio.checkPlayerId(id);
+    if (existe === true) {
+      const resultado = await servicio.recuperaPartidas(id);
+      res.status(200).json(resultado);
+    } else {
+      res.status(404).json({
+        message: 'El jugador introducido no exite',
+      });
+    }
+  } catch (err) {
+    return next(new Error(err));
   }
 };
-//Devuelve el ranking de todos los jugadores
-const allRanking = async (req, res) => {
+//Returns the ranking of all players
+const allRanking = async (req, res, next) => {
   try {
     const results = await servicio.allRanking();
     res.status(200).json(results);
-  } catch (e) {
-    res
-      .status(500)
-      .send({ message: `Se ha producido un error en el servidor  ` });
+  } catch (err) {
+    return next(new Error(err));
   }
 };
-//Devuelve el mejor del ranking
-const winner = async (req, res) => {
+//Returns the best of the ranking 
+const winner = async (req, res, next) => {
   try {
     const resultado = await servicio.allRanking();
     res.status(200).send(resultado[0]);
-  } catch (e) {
-    res.status(500).json({ message: e });
+  } catch (err) {
+    return next(new Error(err));
   }
 };
-//Devuelve el peor del ranking que haya jugado al menos una partida
-const loser = async (req, res) => {
+//Returns the worst ranked player who has played at least one game
+const loser = async (req, res, next) => {
   try {
     const resultado = await servicio.allRanking();
     res.status(200).send(resultado[resultado.length - 1]);
-  } catch (e) {
-    res.status(500).json({ message: e });
+  } catch (err) {
+    return next(new Error(err));
   }
 };
 
